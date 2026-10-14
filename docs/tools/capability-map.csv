@@ -1,0 +1,13 @@
+capability,reader_use,typical_input_output,candidate_reference,knowledge_pages,method_pages,tool_pages,notes
+模型及提示评估,比较回答和提示变化,测试集、断言 → 逐题结果,Promptfoo；人工计算,concepts/evaluation-foundations.md,methods/evaluation-design.md;methods/judge-calibration.md,tools/promptfoo.md,参考路径；工具不等于监管要求或风险认证
+RAG检索与生成,区分检索不足和生成失真,问题、上下文、参考、答案 → 指标,Ragas；Azure AI评估器；人工核对,concepts/rag.md,methods/rag-retrieval-evaluation.md;methods/rag-generation-evaluation.md,tools/ragas.md;tools/azure-rag-evaluators.md,参考路径；工具不等于监管要求或风险认证
+对抗测试,探索注入、多轮及跨语言失效,攻击、目标、检测器 → 会话及命中,garak；Promptfoo；PyRIT；人工挑战,concepts/robustness-and-security.md,methods/adversarial-testing.md,tools/garak.md;tools/promptfoo.md;tools/pyrit.md,参考路径；工具不等于监管要求或风险认证
+防护,验证漏拦、误拒及工具边界,输入、规则 → 放行或阻断,NeMo Guardrails；规则校验,concepts/agent-risk.md,methods/agent-execution-boundary-test.md,tools/nemo-guardrails.md,参考路径；工具不等于监管要求或风险认证
+隐私,识别实体、评估脱敏和隐私攻击,文本、真值 → 实体位置及漏检,Presidio；人工标注；专门攻击测试,concepts/data-and-privacy.md,methods/privacy-testing.md,tools/presidio.md;tools/purview.md,参考路径；工具不等于监管要求或风险认证
+公平性,比较群组错误与不确定性,真值、预测、群组 → 分组指标,Fairlearn；人工分组,concepts/fairness-and-explanation.md,methods/fairness-and-explanation.md,tools/fairlearn.md,参考路径；工具不等于监管要求或风险认证
+漂移,区分分布变化和行为退化,参考集、当前集 → 漂移与质量,Evidently；固定测试集,concepts/monitoring-and-drift.md,methods/drift-detection.md;methods/change-regression.md,tools/evidently.md,参考路径；工具不等于监管要求或风险认证
+观测与复现,关联版本、检索及工具调用,参数、span、指标 → 实验及调用树,MLflow；Phoenix；OpenTelemetry,concepts/system-components.md,methods/change-regression.md,tools/mlflow.md;tools/phoenix.md,参考路径；工具不等于监管要求或风险认证
+供应链,识别应用依赖及漏洞匹配局限,软件目录、镜像 → SBOM → 匹配,Syft；Dependency-Track；人工分析,concepts/third-party-and-resilience.md,methods/concentration-and-recovery.md,tools/syft.md;tools/dependency-track.md,参考路径；工具不等于监管要求或风险认证
+韧性,比较故障前后任务质量,故障输入、恢复响应 → 差异,故障模拟与固定测试；无单一认证工具,concepts/third-party-and-resilience.md,methods/concentration-and-recovery.md,tools/mlflow.md;tools/existing-exports-and-spreadsheets.md,参考路径；工具不等于监管要求或风险认证
+人机交互,衡量误依赖和人工复核效果,回答、标注、使用结果 → 错误与纠正,人工实验；分组计数,concepts/human-ai-interaction.md,methods/human-review-challenge.md,tools/existing-exports-and-spreadsheets.md,参考路径；工具不等于监管要求或风险认证
+威胁知识,补充攻击场景与风险类别,系统路径 → 场景分类,MITRE ATLAS；OWASP；NIST开放资料,concepts/robustness-and-security.md,methods/adversarial-testing.md,tools/mitre-atlas.md;tools/owasp-genai.md;tools/nist-ai-rmf-and-csf.md,参考路径；工具不等于监管要求或风险认证

@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # 文档站点依赖（仅 CI 构建时使用，不在浏览器中运行）
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Asia/Hong_Kong
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - docs
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      mkdocs:
+        patterns:
+          - "mkdocs-material"
+          - "pymdown-extensions"
+          - "mkdocs*"
+      chinese-tokenizer:
+        patterns:
+          - "jieba"
+
+  # GitHub Actions 版本
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    labels:
+      - dependencies
+      - ci
+    commit-message:
+      prefix: "chore(ci)"

@@ -1,0 +1,93 @@
+name: Bug report
+
+description: 发现内容错误、链接失效或数据不一致
+title: "[内容] "
+labels: ["content", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你发现问题。**内容类问题请尽量给出监管原文定位**，这样最快。
+
+        ⚠️ **如果你发现的是真实数据泄露，请不要用这个模板。**
+        请改用 安全政策（见仓库对应文件）
+        中的私密报告方式。
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 问题类型
+      options:
+        - 表述与监管原文不符
+        - 链接失效
+        - 数量/前后不一致
+        - 措辞强度被改写或标记缺失
+        - 教学演算或数据字段问题
+        - 站点构建或渲染问题
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: 问题位置
+      description: 文件路径 + 行号，或页面标题
+      placeholder: |
+        docs/methods/factuality-and-citations.md:42
+        或
+        「事实性与引用核验」页面的第三节
+    validations:
+      required: true
+
+  - type: dropdown
+    id: marker
+    attributes:
+      label: 涉及的内容标记
+      description: 勾选该段落标注的标记。多选请在补充说明中列出。
+      multiple: true
+      options:
+        - "[监管要求/期望]"
+        - "[监管附录示例]"
+        - "[技术解释]"
+        - "[参考方法]"
+        - "[教学示例]"
+        - "[可选工具/框架]"
+        - 未标注 / 不确定
+
+  - type: textarea
+    id: source
+    attributes:
+      label: 监管原文定位
+      description: |
+        如果涉及监管要求，请给出：通函编号 + 段落号 + 页码 + 相关原文摘录。
+        这一项会显著加快处理速度。
+      placeholder: |
+        24EC55 第 X 段，第 Y 页：「...原文摘录...」
+        我认为应写成「...」，因为原文用的是「鼓励」而非「必须」。
+    validations:
+      required: false
+
+  - type: textarea
+    id: current
+    attributes:
+      label: 当前表述
+      description: 粘贴出问题段落原文
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议修改
+      description: 你认为应该怎么写。若不确定，欢迎只写判断依据。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已确认本 Issue 不含任何真实客户数据、交易记录或生产环境信息
+          required: true

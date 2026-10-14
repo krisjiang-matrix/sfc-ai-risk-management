@@ -1,0 +1,2 @@
+metric,numerator,denominator,value,interpretation
+factual_error_rate,1,5,0.2,教学样本错误比例不代表总体风险

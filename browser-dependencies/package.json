@@ -1,0 +1,11 @@
+{
+  "name": "sfc-knowledge-browser-dependencies",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Audit metadata for fixed CDN libraries; not a site build step.",
+  "license": "MIT",
+  "dependencies": {
+    "mermaid": "11.17.2",
+    "resize-observer-polyfill": "1.5.1"
+  }
+}

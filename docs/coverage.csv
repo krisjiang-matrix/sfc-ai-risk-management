@@ -1,0 +1,12 @@
+topic_id,title,concept_path,concept_status,method_paths,method_status,tool_paths,tool_status,source_ids,source_status,gaps
+system,系统构成与风险路径,concepts/system-components.md,完整,methods/evaluation-design.md,完整,tools/mlflow.md,完整,SFC-24EC55,完整,不覆盖所有模型架构；实现变化需按具体系统重新追踪
+reliability,输出可靠性,concepts/output-reliability.md,完整,methods/factuality-and-citations.md|methods/prompt-variation.md,完整,tools/promptfoo.md,完整,SFC-24EC55|SFC-24EC55-A,完整,数值计算与多语言有教学路径；暂无真实模型基准
+evaluation,评估基础,concepts/evaluation-foundations.md,完整,methods/evaluation-design.md|methods/gold-standard-design.md|methods/stratified-sampling.md|methods/judge-calibration.md,完整,tools/promptfoo.md|tools/mlflow.md,完整,SFC-24EC55,完整,无生产数据；不提供通用样本量和通过阈值
+rag,RAG 检索与生成,concepts/rag.md,完整,methods/rag-retrieval-evaluation.md|methods/rag-generation-evaluation.md|methods/rag-design-diagnostics.md,完整,tools/ragas.md|tools/azure-rag-evaluators.md,完整,SFC-24EC55|SFC-24EC55-A,完整,缺少特定中文文档集、长表格的实测对照
+security,稳健性与安全,concepts/robustness-and-security.md,完整,methods/adversarial-testing.md|methods/prompt-variation.md,部分,tools/garak.md|tools/promptfoo.md|tools/pyrit.md|tools/nemo-guardrails.md,完整,SFC-24EC55-A|SFC-26EC32,完整,多模态攻击与各模型投毒测试尚无完整教学演算
+privacy,数据与隐私,concepts/data-and-privacy.md,完整,methods/privacy-testing.md,部分,tools/presidio.md,部分,SFC-24EC55-A,完整,PII检测可实现；训练提取及反演缺少完整实验；黑盒训练数据通常未知
+fairness,偏差、公平性与解释,concepts/fairness-and-explanation.md,完整,methods/fairness-and-explanation.md,部分,tools/fairlearn.md,部分,SFC-24EC55-A,完整,公平性有演算；解释提供人工遮蔽路径，未覆盖专门解释工具和特定法律判断
+agent,Agent 风险,concepts/agent-risk.md,完整,methods/agent-execution-boundary-test.md,部分,tools/pyrit.md|tools/promptfoo.md,部分,SFC-24EC55-A|SFC-26EC32,完整,合成轨迹与边界可复核；未提供各类运行时的生产集成
+monitoring,持续监测与漂移,concepts/monitoring-and-drift.md,完整,methods/drift-detection.md|methods/change-regression.md|methods/kri-data-quality-and-backtesting.md,完整,tools/evidently.md|tools/phoenix.md|tools/mlflow.md,完整,SFC-24EC55,完整,有构成/配对演算，尚无真实生产纵向数据
+resilience,第三方与韧性,concepts/third-party-and-resilience.md,完整,methods/concentration-and-recovery.md,完整,tools/syft.md|tools/dependency-track.md,部分,SFC-24EC55|SFC-26EC32,完整,软件依赖有工具路径；替代模型效果及数据可迁移性需人工或自有观测验证
+human,人与 AI 交互,concepts/human-ai-interaction.md,完整,methods/human-review-challenge.md,完整,tools/existing-exports-and-spreadsheets.md,完整,SFC-24EC55|SFC-24EC55-A,完整,人工盲测可实现；不外推生产人审效力或提供岗位分工

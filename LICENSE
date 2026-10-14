@@ -1,0 +1,94 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+=======================================================================
+
+本项目（sfc-ai-riskmanagement）的**内容**（包括但不限于 docs/ 目录下
+所有 Markdown 文件、CSV 文件、图示与文档正文；不含站点代码）在知识共享与署名
+4.0 国际许可协议（Creative Commons Attribution 4.0 International，
+下称「CC BY 4.0」）下发布。
+
+代码文件（scripts/、tests/、.github/ 中的代码与工作流、站点构建配置
+overrides/ 模板、browser-dependencies/ 依赖配置及 docs/assets/ 下的 CSS、JavaScript）单独适用 MIT，见 LICENSE-code。
+
+=======================================================================
+How to apply the Creative Commons Attribution 4.0 International license
+=======================================================================
+
+Creative Commons Attribution 4.0 International ("CC BY 4.0") is a
+copyright license consisting of three layers:
+
+  - Licensed Material (the licensed material)
+  - Copyright (the copyright notice)
+  - License Notice (the license notice)
+
+=======================================================================
+You are free to:
+
+  Share -- copy and redistribute the material in any medium or format
+  Adapt  -- remix, transform, and build upon the material
+           for any purpose, even commercially.
+
+The licensor cannot revoke these freedoms as long as you follow the
+license terms.
+
+=======================================================================
+Under the following terms:
+
+  Attribution -- You must give appropriate credit, provide a link to
+                the license, and indicate if changes were made. You
+                may do so in any reasonable manner, but not in any way
+                that suggests the licensor endorses you or your use.
+
+  No additional restrictions -- You may not apply legal terms or
+                technological measures that legally restrict others
+                from doing anything the license permits.
+
+=======================================================================
+Notices:
+
+  You do not have to comply with the license for elements of the
+  material in the public domain or where your use is permitted by an
+  applicable exception or limitation.
+
+  No warranties are given. The license may not give you all of the
+  permissions necessary for your intended use. For example, other
+  rights such as publicity, privacy, or moral rights may limit how
+  you use the material.
+
+=======================================================================
+中文条款摘要（非官方翻译，以英文原文为准）
+
+本仓库内容以 CC BY 4.0 发布。使用者可：
+
+  - 分享：以任何媒介或格式复制并再分发
+  - 改编：为任何目的（包括商业目的）进行重编、变换与再创作
+
+使用条件：
+
+  - 署名：必须以合理方式标注来源、提供许可协议链接，并说明是否
+          做了修改。不得暗示原作者认可你的使用。
+  - 保持一致：不得施加法律条款或技术手段，限制他人行使本协议
+              允许的行为。
+
+署名格式建议：
+
+  「转载自 SFC AI 治理知识枢纽（sfc-ai-riskmanagement），基于 CC BY 4.0，
+    作者/贡献者：<原作者或贡献者名>，原文链接：<页面 URL>，修改说明：<如有>」
+
+完整条款：https://creativecommons.org/licenses/by/4.0/legalcode
+
+=======================================================================
+关于第三方内容
+
+本仓库仅为**链接、自编解释与合成示例**，不包含任何监管原文的全文
+复制。SFC 通函原文版权归香港证券及期货事务委员会所有，须自行前往
+apps.sfc.hk 取得。第三方工具名称与商标归属各自权利人，本仓库不主张
+任何权利。详见 docs/references/reuse-policy.md。
+
+=======================================================================
+About the Chinese summary above
+
+The Chinese summary above is an unofficial convenience translation of
+the CC BY 4.0 license. In case of any discrepancy, the official
+English legalcode at https://creativecommons.org/licenses/by/4.0/legalcode
+prevails.

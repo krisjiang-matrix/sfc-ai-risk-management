@@ -1,0 +1,91 @@
+name: New circular or regulatory update
+
+description: SFC 或其他监管机构发布了新的 AI / 网络安全 / 电子交易相关文件
+title: "[监管] "
+labels: ["regulatory", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        本库提供**定时监听**，新通函通常会被自动检测并开 issue。
+        如果你在官方渠道先看到了，欢迎补充你掌握的信息（尤其是**后续轮次**
+        或**时间表变更**，这类变更自动检测难以捕捉）。
+
+  - type: input
+    id: refno
+    attributes:
+      label: 通函编号 / 文号
+      placeholder: 26EC42
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: 官方标题
+      description: 照抄官方标题，不要意译
+    validations:
+      required: true
+
+  - type: input
+    id: date
+    attributes:
+      label: 发布日期
+      placeholder: 2026-10-15
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: 官方来源链接
+      description: 必须是官方一手来源（apps.sfc.hk 等），不接受二手转述
+      placeholder: https://apps.sfc.hk/edistributionWeb/api/circular/openFile?lang=EN&refNo=26EC42
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issuer
+    attributes:
+      label: 发布机构
+      options:
+        - SFC 香港证监会
+        - HKMA 香港金管局
+        - 联合发布
+        - 其他监管机构
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: relevance
+    attributes:
+      label: 与本库的关系
+      description: |
+        简要说明它是否改变本库现有结论。例如：
+        - 新增了本库未覆盖的 AI 控制要求
+        - 修改了 24EC55 的适用范围
+        - 纯策略方向，无新增企业义务
+        - 明确沙盒安排的申请窗口
+    validations:
+      required: true
+
+  - type: dropdown
+    id: action
+    attributes:
+      label: 是否涉及时间表变更
+      description: 时间表变更是本库使用者最需要被及时告知的内容
+      options:
+        - 是，有新的实施期限或阶段
+        - 否
+        - 不确定
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 其他信息
+      description: 段落定位、附录情况、已登记的 source_id 等
+    validations:
+      required: false
