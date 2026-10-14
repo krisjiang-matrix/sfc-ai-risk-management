@@ -1,0 +1,70 @@
+name: Verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # 每周一 03:17 UTC 检查上游外链存活
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integrity:
+    name: Knowledge base integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Offline integrity checks
+        run: python scripts/verify_knowledge_base.py
+
+      - name: Regression checks for migrations and coverage
+        run: python -m unittest discover -s tests
+
+      - name: External link liveness
+        # 仅在定时任务与手动触发时执行：PR 上的网络抖动不应阻塞贡献
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: python scripts/verify_knowledge_base.py --check-external --external-timeout 15
+
+  build:
+    name: Build docs (strict)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - run: python -m pip install --require-hashes -r requirements-docs.lock
+
+      - name: mkdocs build --strict
+        run: mkdocs build --strict
+
+      - name: Verify rendered migrations and search
+        run: python -m unittest discover -s tests
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: site
+          path: site/
+          retention-days: 7

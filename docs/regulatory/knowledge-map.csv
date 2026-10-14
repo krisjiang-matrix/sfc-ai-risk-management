@@ -1,0 +1,14 @@
+unit_id,unit_path,circular,locator,classification,applicable_scope,interpretation,method_path,tool_path,source_id,verification_status
+system,concepts/system-components.md,24EC55,第13(c)、14–15段,监管要求/期望背景；实现为参考方法,按24EC55第6段适用范围判断,系统构成与风险路径；工具和教学指标非监管指定,methods/evaluation-design.md,tools/mlflow.md,SFC-24EC55,原文定位与技术延伸分别标识
+reliability,concepts/output-reliability.md,24EC55,第4(a)、13(c)段；附录第3–10段,监管要求/期望背景；实现为参考方法,按24EC55第6段适用范围判断,输出可靠性；工具和教学指标非监管指定,methods/factuality-and-citations.md,tools/promptfoo.md,SFC-24EC55,原文定位与技术延伸分别标识
+evaluation,concepts/evaluation-foundations.md,24EC55,第13(b)–(d)及18(a)段；脚注14,监管要求/期望背景；实现为参考方法,按24EC55第6段适用范围判断,评估基础；工具和教学指标非监管指定,methods/evaluation-design.md,tools/promptfoo.md,SFC-24EC55,原文定位与技术延伸分别标识
+rag,concepts/rag.md,24EC55,附录第9–10段,监管附录示例背景；实现为参考方法,按24EC55第6段适用范围判断,RAG 检索与生成；工具和教学指标非监管指定,methods/rag-retrieval-evaluation.md,tools/ragas.md,SFC-24EC55-A,原文定位与技术延伸分别标识
+security,concepts/robustness-and-security.md,24EC55,附录第11–13段,监管附录示例背景；实现为参考方法,按24EC55第6段适用范围判断,稳健性与安全；工具和教学指标非监管指定,methods/adversarial-testing.md,tools/garak.md,SFC-24EC55-A,原文定位与技术延伸分别标识
+privacy,concepts/data-and-privacy.md,24EC55,附录第14–17段,监管附录示例背景；实现为参考方法,按24EC55第6段适用范围判断,数据与隐私；工具和教学指标非监管指定,methods/privacy-testing.md,tools/presidio.md,SFC-24EC55-A,原文定位与技术延伸分别标识
+fairness,concepts/fairness-and-explanation.md,24EC55,附录第3(b)、3(c)、3(h)段,监管附录示例背景；实现为参考方法,按24EC55第6段适用范围判断,偏差、公平性与解释；工具和教学指标非监管指定,methods/fairness-and-explanation.md,tools/fairlearn.md,SFC-24EC55-A,原文定位与技术延伸分别标识
+agent,concepts/agent-risk.md,24EC55,附录第2段,监管附录示例背景；实现为参考方法,按24EC55第6段适用范围判断,Agent 风险；工具和教学指标非监管指定,methods/agent-execution-boundary-test.md,tools/pyrit.md,SFC-24EC55-A,原文定位与技术延伸分别标识
+monitoring,concepts/monitoring-and-drift.md,24EC55,第13(d)段,监管要求/期望背景；实现为参考方法,按24EC55第6段适用范围判断,持续监测与漂移；工具和教学指标非监管指定,methods/drift-detection.md,tools/evidently.md,SFC-24EC55,原文定位与技术延伸分别标识
+resilience,concepts/third-party-and-resilience.md,24EC55,第26–29段,监管要求/期望背景；实现为参考方法,按24EC55第6段适用范围判断,第三方与韧性；工具和教学指标非监管指定,methods/concentration-and-recovery.md,tools/syft.md,SFC-24EC55,原文定位与技术延伸分别标识
+human,concepts/human-ai-interaction.md,24EC55,第17–19段；附录第1段,监管要求/期望背景；实现为参考方法,按24EC55第6段适用范围判断,人与 AI 交互；工具和教学指标非监管指定,methods/human-review-challenge.md,tools/existing-exports-and-spreadsheets.md,SFC-24EC55,原文定位与技术延伸分别标识
+governance-context,regulatory/24EC55.md,24EC55,第9–12段及13(a)段,监管要求/期望,适用持牌法团,保留来源导读；机构治理与职责实施不在本库展开,,,SFC-24EC55,范围边界已注明
+ai-cyber,concepts/robustness-and-security.md,26EC32,第11段,监管要求/期望,按26EC32适用范围判断,AI相关组件及不可信输入背景；通用IT控制不作为核心百科,methods/adversarial-testing.md,tools/pyrit.md,SFC-26EC32,原文关联；方法非统一程序

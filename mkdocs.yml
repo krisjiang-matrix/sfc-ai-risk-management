@@ -1,0 +1,188 @@
+site_name: SFC AI 风险管理知识库
+site_description: 面向风险管理人员的开放知识库，解释 AI 风险概念、实现方法、现有工具及局限；以香港 SFC 要求为背景
+site_author: 知识库贡献者
+repo_url: https://github.com/krisjiang-matrix/sfc-ai-risk-management
+site_url: https://krisjiang-matrix.github.io/sfc-ai-risk-management/
+copyright: 内容采用 CC BY 4.0 授权 · 代码采用 MIT 授权 · 非法律或合规意见
+docs_dir: docs
+
+extra_css:
+  - assets/stylesheets/reading.css
+
+# 保留旧 URL 的退役说明；不再发布可用工作模板。
+exclude_docs: |
+  !/templates/
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: zh
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换至深色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换至浅色模式
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+
+hooks:
+  - scripts/mkdocs_hooks.py
+
+# 兼容入口会构建，但不出现在导航与全文搜索中。
+not_in_nav: |
+  /chapters/**
+  /templates/**
+  /handbook/**
+  /tools/sentinel.md
+  /tools/tenable.md
+  /getting-started.md
+  /reading-paths.md
+  /hub/start-here.md
+  /hub/applicability-wizard.md
+
+nav:
+  - 首页:
+      - 项目介绍: index.md
+      - 术语表: glossary.md
+      - English: en/index.md
+      - 项目资料:
+          - 内容覆盖与缺口: coverage.md
+          - 编辑与贡献: editorial/content-standard.md
+          - 内容维护: editorial/maintenance.md
+          - 发布说明: editorial/publication-notes.md
+          - 验收记录: editorial/acceptance.md
+          - 研究与读物: hub/reading-lists.md
+          - 参考资源: references/index.md
+          - 授权与复用: references/reuse-policy.md
+  - SFC 要求:
+      - 要求总览: regulatory/index.md
+      - 24EC55：核心 AI 要求: regulatory/24EC55.md
+      - 26EC32：AI 网络风险: regulatory/26EC32.md
+      - 适用范围: regulatory/applicability.md
+      - 辅助资料:
+          - 26EC35：交易认证: regulatory/26EC35.md
+          - 26EC11：沙盒安排: regulatory/26EC11.md
+          - 官方文件索引: hub/official-sources.md
+          - 其他辖区: hub/jurisdictions.md
+          - 解释修正: regulatory/handbook-corrections.md
+      - 通函速查:
+          - 速查目录: cheatsheets/index.md
+          - 24EC55: cheatsheets/24EC55.md
+          - 26EC32: cheatsheets/26EC32.md
+          - 26EC35: cheatsheets/26EC35.md
+          - 26EC11: cheatsheets/26EC11.md
+  - 风险知识:
+      - 风险主题目录: concepts/index.md
+      - 基础:
+          - 系统构成: concepts/system-components.md
+          - 评估基础: concepts/evaluation-foundations.md
+      - 模型与数据:
+          - 输出可靠性: concepts/output-reliability.md
+          - RAG: concepts/rag.md
+          - 数据与隐私: concepts/data-and-privacy.md
+          - 公平性与解释: concepts/fairness-and-explanation.md
+      - 安全与运行:
+          - 稳健性与安全: concepts/robustness-and-security.md
+          - Agent 风险: concepts/agent-risk.md
+          - 监测与漂移: concepts/monitoring-and-drift.md
+          - 第三方与韧性: concepts/third-party-and-resilience.md
+          - 人机交互: concepts/human-ai-interaction.md
+      - 教学案例:
+          - RAG 为什么答错: topics/rag.md
+          - 提示注入: topics/prompt-injection.md
+          - Agent 权限: topics/agent-permissions.md
+          - 模型裁判: topics/model-judge.md
+          - 摘要中的事实错误: examples/broker-client-research.md
+          - 检索成功与生成失败: examples/asset-manager-internal-rag.md
+          - AI 身份欺诈: examples/internet-fund-distribution.md
+  - 实现方法:
+      - 方法目录: methods/index.md
+      - 设计评估:
+          - 评估设计: methods/evaluation-design.md
+          - 金标准与答案标注: methods/gold-standard-design.md
+          - 分层抽样: methods/stratified-sampling.md
+          - 事实与引用核查: methods/factuality-and-citations.md
+          - 模型裁判校准: methods/judge-calibration.md
+          - 测试证据解读: methods/read-only-evidence-review.md
+      - 测试 RAG:
+          - 检索评估: methods/rag-retrieval-evaluation.md
+          - 生成评估: methods/rag-generation-evaluation.md
+          - 分层诊断: methods/rag-design-diagnostics.md
+      - 测试风险:
+          - 提示变化: methods/prompt-variation.md
+          - 对抗测试: methods/adversarial-testing.md
+          - Agent 执行边界: methods/agent-execution-boundary-test.md
+          - 隐私测试: methods/privacy-testing.md
+          - 公平性与解释: methods/fairness-and-explanation.md
+      - 持续评估:
+          - 变更回归: methods/change-regression.md
+          - 漂移检测: methods/drift-detection.md
+          - 监测数据与回测: methods/kri-data-quality-and-backtesting.md
+          - 人审盲测: methods/human-review-challenge.md
+          - 集中度与恢复: methods/concentration-and-recovery.md
+  - 工具参考:
+      - 工具能力目录: tools/index.md
+      - 质量评估:
+          - Promptfoo: tools/promptfoo.md
+          - Ragas: tools/ragas.md
+          - Azure 评估器: tools/azure-rag-evaluators.md
+          - 人工计算: tools/existing-exports-and-spreadsheets.md
+      - 安全与隐私:
+          - garak: tools/garak.md
+          - PyRIT: tools/pyrit.md
+          - NeMo Guardrails: tools/nemo-guardrails.md
+          - Presidio: tools/presidio.md
+          - Microsoft Purview: tools/purview.md
+      - 公平性与监测:
+          - Fairlearn: tools/fairlearn.md
+          - Evidently: tools/evidently.md
+          - Phoenix: tools/phoenix.md
+          - MLflow: tools/mlflow.md
+      - 软件依赖:
+          - Syft: tools/syft.md
+          - Dependency-Track: tools/dependency-track.md
+      - 参考框架:
+          - OWASP: tools/owasp-genai.md
+          - MITRE ATLAS: tools/mitre-atlas.md
+          - NIST: tools/nist-ai-rmf-and-csf.md
+          - 标准与框架对照: hub/standards.md

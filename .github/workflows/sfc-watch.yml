@@ -1,0 +1,136 @@
+name: SFC Circular Watch
+
+# 定期检查 SFC 是否发布了新的通函。
+# 重要：本工作流只做「新文件提示」，不做内容核实。
+# 自动提醒不等于内容已核实 —— 任何新通函仍须人工阅读官方编号版后再更新知识库。
+
+on:
+  schedule:
+    # 每周一 04:23 UTC（香港时间中午 12:23）
+    - cron: "23 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: sfc-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    name: Check SFC circulars index
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Fetch SFC circulars index for AI-related documents
+        id: probe
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          mkdir -p .sfc-watch
+          URL="https://apps.sfc.hk/edistributionWeb/api/circular/list?lang=EN&marketMainCategory=&marketSubCategory=&documentType=-1&fromDate=2024-01-01&toDate=$(date -u +%Y-%m-%d)&title=&searchType=1"
+          curl -sS --max-time 45 -A "sfc-ai-riskmanagement-watch/1.0" \
+               "$URL" -o .sfc-watch/index.json || true
+          if [ -s .sfc-watch/index.json ]; then
+            echo "fetched=$(wc -c < .sfc-watch/index.json | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+          else
+            echo "fetched=0" >> "$GITHUB_OUTPUT"
+            echo "note=SFC endpoint unavailable or returned empty; skipping check"
+          fi
+
+      - name: Compare against registered circulars
+        id: diff
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import csv, json, os, re, pathlib
+
+          def output(**values):
+              with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as fp:
+                  for key, value in values.items():
+                      print('%s=%s' % (key, value))
+                      fp.write('%s=%s\n' % (key, value))
+
+          known = set()
+          with open('docs/source-register.csv', encoding='utf-8-sig', newline='') as fp:
+              for row in csv.DictReader(fp):
+                  v = (row.get('version') or '')
+                  m = re.match(r'(\d{2}EC\d{2})', v.strip())
+                  if m:
+                      known.add(m.group(1))
+          pathlib.Path('.sfc-watch/known.txt').write_text('\n'.join(sorted(known)))
+
+          path = pathlib.Path('.sfc-watch/index.json')
+          if not path.exists() or path.stat().st_size == 0:
+              output(status='unavailable', known=len(known), found=0, new='')
+              raise SystemExit(0)
+
+          raw = path.read_text(encoding='utf-8', errors='replace')
+          found = set(re.findall(r'\b\d{2}EC\d{2}\b', raw))
+          new = sorted(found - known)
+          output(status='ok', known=len(known), found=len(found), new=','.join(new))
+          pathlib.Path('.sfc-watch/new.txt').write_text('\n'.join(new))
+          PY
+
+      - name: Create issue if a new circular appears
+        if: steps.diff.outputs.status == 'ok' && steps.diff.outputs.new != ''
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          NEW_REFS: ${{ steps.diff.outputs.new }}
+        with:
+          script: |
+            const newRefs = (process.env.NEW_REFS || '').split(',').filter(Boolean);
+            if (!newRefs.length) { core.info('nothing new'); return; }
+
+            const title = `[自动监听] 新 SFC 通函待核实: ${newRefs.join(', ')}`;
+            const body = [
+              '## 检测到未登记的 SFC 通函编号',
+              '',
+              '自动监听发现以下编号尚未出现在 `docs/source-register.csv` 中：',
+              '',
+              '```',
+              newRefs.join('\n'),
+              '```',
+              '',
+              '### 建议处理步骤',
+              '',
+              '1. 从 SFC 官方 e-distribution 取得**编号版 PDF**（不要只看网页摘要）。',
+              '2. 依 [CONTRIBUTING.md](../../CONTRIBUTING.md) 第一节红线判断该文件是否涉及 AI/网络/电子交易风险；若不涉及，标记为无需收录即可。',
+              '3. 在 `docs/source-register.csv` 增行，字段须齐全：`source_id`、`title`、`publisher`、`url`、`document_date`、`accessed_at`、`version`、`locator`、`source_type`、`reuse_status`、`verification_status`、`notes`。',
+              '4. 若涉及本库范围，新建或更新 `docs/regulatory/<编号>.md`，并完成段落级映射。',
+              '5. 更新 `docs/regulatory/index.md`。',
+              '6. 运行校验：`python scripts/verify_knowledge_base.py`',
+              '',
+              '---',
+              '',
+              '> 本 issue 由自动化工作流创建。**自动提醒不代表内容已核实。**',
+              '> 在官方编号版 PDF 被人工阅读、并按内容标记规范撰写之前，',
+              '> 不得在任何页面引用该通函。',
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+            });
+            core.info(`created issue for: ${newRefs.join(', ')}`);
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### SFC 通函监听结果"
+            echo ""
+            echo "- 抓取状态: \`${{ steps.probe.outputs.fetched != '' && steps.probe.outputs.fetched != '0' && '成功' || '端点不可用或未完成，本次跳过' }}\`"
+            echo "- 监听状态: ${{ steps.diff.outputs.status || '未执行' }}"
+            echo "- 已登记编号数: ${{ steps.diff.outputs.known || '未知' }}"
+            echo "- 本次发现的新编号: \`${{ steps.diff.outputs.new || '无' }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

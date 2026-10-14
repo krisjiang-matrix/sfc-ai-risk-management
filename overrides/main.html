@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block extrahead %}
+  {{ super() }}
+  {# Load fixed, integrity-checked libraries before Material requests floating CDN versions. #}
+  <script src="https://unpkg.com/mermaid@11.17.2/dist/mermaid.min.js" integrity="sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2" crossorigin="anonymous"></script>
+  <script>
+    if (typeof window.ResizeObserver === "undefined") {
+      document.write('<script src="https://unpkg.com/resize-observer-polyfill@1.5.1/dist/ResizeObserver.global.js" integrity="sha384-eSMV320K3ry4wTAyMMKUVfyFJvIf2xM1cDlPl/8u2OXSO+lsaWs9N/K76p/01B63" crossorigin="anonymous"><\/script>');
+    }
+  </script>
+{% endblock %}

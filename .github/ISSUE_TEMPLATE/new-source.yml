@@ -1,0 +1,88 @@
+name: New concept, method, tool, or source
+
+description: 补充知识缺口、实现方法、工具能力或一手研究来源
+title: "[新增] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        先说明需要解释的风险问题和现有覆盖缺口。
+        请先读 贡献指南（见仓库对应文件）。
+
+        ⚠️ **提 issue 前请确认**：
+        - 你有**官方一手来源**（不是二手解读）
+        - 你能说明它**支撑本库哪个方法**
+        - 你**不会**在提交内容中放入真实数据
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 新增类型
+      options:
+        - 辖区对照（MAS / FCA / APRA / EU / 内地等）
+        - 标准或框架（NIST / ISO / OWASP / CSA / MITRE 等）
+        - 工具参考（评测 / 扫描 / 追踪 / SBOM 等）
+        - 论文或读物
+        - 模板或数据字典字段
+        - 其他
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: 名称
+      placeholder: MAS Guidelines on AI use
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 版本 / 文号 / 发布日期
+      description: 工具请给固定 commit 哈希，不要用 main 分支
+      placeholder: 2026-03 修订 / 8d1259ef
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: 官方来源链接
+      placeholder: https://www.mas.gov.sg/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: supports
+    attributes:
+      label: 它支撑本库哪个方法的哪个判断
+      description: |
+        **这是本 issue 最重要的字段。** 说明清楚这一项才收。
+        反例：「很有参考价值」——无法判断
+        正例：「可替代 garak 做批量断言，支撑 adversarial-testing.md 的第 4 步回归」
+    validations:
+      required: true
+
+  - type: dropdown
+    id: depth
+    attributes:
+      label: 你打算做到什么覆盖深度
+      description: 不要把框架级写成条款级，这会误导读者
+      options:
+        - 仅登记链接与基本信息
+        - 框架级解释（说明它讲了什么，不逐条映射）
+        - 条款级映射（逐段对应到本库章节）
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ready
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已阅读资料复用与知识产权政策（见仓库对应文件），确认提交内容不含任何真实数据
+          required: true
+        - label: 我理解标注为 `[可选工具/框架]` / 框架参考的内容**不构成** SFC 采购清单或合规结论
+          required: true

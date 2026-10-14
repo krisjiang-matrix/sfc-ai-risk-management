@@ -1,0 +1,80 @@
+name: Deploy Knowledge Base to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# 设置 GitHub Pages 部署所需权限
+permissions:
+  contents: read
+
+# 限制并发，保证部署顺序安全
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Verify Knowledge Base Integrity
+        run: |
+          python scripts/verify_knowledge_base.py
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --require-hashes -r requirements-docs.lock
+
+      - name: Build site with MkDocs
+        run: |
+          mkdocs build --strict
+
+      - name: Verify rendered migrations and search
+        run: python -m unittest discover -s tests
+
+      - name: Package Pages artifact
+        run: |
+          tar --dereference --hard-dereference --directory site \
+            --exclude=.git --exclude=.github -cf "$RUNNER_TEMP/artifact.tar" .
+
+      - name: Upload Pages artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
+          compression-level: 0
+
+  deploy:
+    # Publish the explicitly selected default project Pages site from main only.
+    if: github.ref == 'refs/heads/main' && vars.KB_PUBLISH_ENABLED == 'true'
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

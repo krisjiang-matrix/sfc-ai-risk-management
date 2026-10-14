@@ -1,0 +1,2 @@
+query_id,relevant_total,retrieved_relevant,k,recall_at_k,precision_at_k
+Q1,2,2,5,1.0,0.4
