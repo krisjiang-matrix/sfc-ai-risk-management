@@ -1,4 +1,4 @@
 # 文档站点与中英文搜索；无自建平台。
-mkdocs>=1.6,<2
-mkdocs-material>=9.5,<10
+mkdocs>=1.6.1,<2
+mkdocs-material>=9.7.7,<10
 jieba>=0.42.1,<1
